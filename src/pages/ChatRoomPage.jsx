@@ -200,9 +200,23 @@ function ChatRoomPage() {
     pictureInputRef.current?.click();
   };
 
+  const handlePasting = (e) =>{
+  
+      console.log("op")
+      let files = e.clipboardData.files
+  
+      if (!files[0]) return
+  
+      handlePictureChange({
+        target: {
+          files: [files[0]]
+        }
+      });
+
+  }
+
   const handlePictureChange = (e) => {
     setIsMediaSending(true); // SET SENDING STATUS TO TRUE
-
     const file = e.target.files[0];
     if (file && allowedPictureTypes.includes(file.type)) {
       const reader = new FileReader();
@@ -594,6 +608,7 @@ function ChatRoomPage() {
               onKeyDown={handleInputKeyDown}
               onInput={startTyping}
               onBlur={stopTyping}
+              onPaste={handlePasting}
             />
           </div>
 
